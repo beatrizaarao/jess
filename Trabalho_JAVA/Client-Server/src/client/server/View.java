@@ -1,0 +1,51 @@
+package client.server;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+import java.time.LocalDate;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Vector;
+
+/**
+ *
+ * @author beatrizaarao
+ */
+public class View {
+         /**
+     * Funcionalidade: mostra a média da temperatura para um determinado dia
+     * @param data dia a considerar para a média
+     * @param sensor sensor a calcular: 0 temperatura
+     */
+    
+    public String mostra_media(LocalDate data, Sensor s) {
+        return s.media(data);
+    }
+
+    /**
+     * Funcionalidade: Mostar os valores máximos e minimos de um determinado sensor para um determinado dia.
+     * @param data dia a considerar para recolher o valor máximo e minímo
+     * @param sensor valor do sensor a recolher: temperatura, humidade, pressão atm, audio, luminosidade
+     */
+    public String  mostra_max_minimo(LocalDate data, Sensor s){
+        return s.max_minimo(data);
+    }
+
+    /**
+     * Mostrar dos ultimos X dias os valores máximos e minumos de um sensor
+     * @param sensor sensor a mostrar
+     * @param dias numero de dias a considerar desde a leitura mais actual.
+     */
+    public String mostra_ultimos_dias(Sensor s, int dias) {
+        return s.ultimos_dias(dias);
+    }
+    
+    public String mostra_ValorAtual(Sensor s){
+        return s.valorAtual();
+    }
+}

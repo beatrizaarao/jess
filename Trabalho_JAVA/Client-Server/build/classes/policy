@@ -1,0 +1,3 @@
+grant codeBase "file:/Users/beatrizaarao/NetBeansProjects/Client-Server/src/" {
+             permission java.security.AllPermission;
+};
