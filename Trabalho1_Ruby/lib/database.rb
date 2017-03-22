@@ -81,10 +81,11 @@ class Database
   #O sensor_type é Temperature ou Noise. Estou a assumir que vais buscar isto como uma string ao que o cliente escolhe no menu
   def sensor_Values(client_name, sensor_type)
     if sensor_type .eql? "Temperature"
-      sth = @dbh.execute("SELECT  Temperature.Value, Temperature.Date FROM Temperature join client on Temperature.client_name=?",client_name)
+      sth = @dbh.execute("SELECT  distinct Temperature.Value, Temperature.Date FROM Temperature join client on Temperature.client_name=?",client_name)
     else
-      sth = @dbh.execute("SELECT  Noise.Value, Noise.Date FROM Noise join client on Noise.client_id=?",client_name)
+      sth = @dbh.execute("SELECT  distinct Noise.Value, Noise.Date FROM Noise join client on Noise.client_id=?",client_name)
     end
+    puts "TESTE"
     while row = sth.fetch do
      puts "Value: #{row[0]}, Date: #{row[1]}"
     end
