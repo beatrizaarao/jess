@@ -16,15 +16,23 @@ class Database
       
   end
  
-  def insert_Client (nome, localizacao, valor)
-    @dbh.do("INSERT INTO client (Name, Location, Connected) VALUES (?,?,?);", nome, localizacao , valor)
+  def getNome(client)
+    nome = @dbh.select_one("SELECT Name FROM client WHERE Connection=?;",client)
+    return nome[0]
     rescue DBI::DatabaseError => e
         puts "An error occurred in insert_Client "
         puts "Error code:    #{e.err}"
   end
   
-  def update_Client (nome, valor)
-    @dbh.do("UPDATE client SET Connected=? WHERE Name=?;", valor, nome) 
+  def insert_Client (nome, localizacao, valor, connection)
+    @dbh.do("INSERT INTO client (Name, Location, Connected, Connection) VALUES (?,?,?,?);", nome, localizacao , valor, connection)
+    rescue DBI::DatabaseError => e
+        puts "An error occurred in insert_Client "
+        puts "Error code:    #{e.err}"
+  end
+  
+  def update_Client (nome, valor, client)
+    @dbh.do("UPDATE client SET Connected=?, Connection=? WHERE Name=?;", valor, client, nome) 
     rescue DBI::DatabaseError => e
         puts "An error occurred in update_Client"
         puts "Error code:    #{e.err}"
@@ -57,8 +65,13 @@ class Database
   #Listar os clientes que estão ‘ligados’ e a sua respetiva localização
   def connected_clientes
     sth = @dbh.execute("SELECT * FROM client where Connected=1")
-    while row = sth.fetch do
-     puts "Name: #{row[0]}, Location: #{row[1]}"
+    count = 0  
+      while row = sth.fetch do
+        puts "Name: #{row[0]}, Location: #{row[1]}"
+        count  = count +1
+      end
+    if count==0 
+      puts "Não existem clientes conectados"
     end
     sth.finish
   end

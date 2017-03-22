@@ -13,15 +13,17 @@ class Client
     @ruido = Ruido.new
     @temperatura = Temperatura.new
     @localizacao = nil
-    @request = nil
-    @response = nil
+    @threadRuido = nil
+    @threadTemp = nil
+    @threadClient = nil
     establish_connection
-    @request.join
-    @response.join    
+    @threadTemp.join
+    @threadRuido.join
+    @threadClient.join     
   end
 
-   def listen
-    @response = Thread.new do
+   def listenRuido
+    @threadRuido = Thread.new do
       loop {
         @ruido.get_Random_Ruido
         time_ruido = @ruido.get_data
@@ -31,8 +33,24 @@ class Client
     end
   end
   
-  def send
-    @request = Thread.new do
+  def listenClient
+    @threadClient = Thread.new do
+      loop {
+        mensagem = $stdin.gets.chomp.to_s
+        if mensagem.eql?("terminar")
+          @server.puts "#{mensagem}"
+          @server.close
+          @threadTemp.terminate
+          @threadRuido.terminate
+          @threadClient.terminate
+        end
+        
+      }
+    end
+  end
+  
+  def listenTemp
+    @threadTemp = Thread.new do
       loop {
         sleep(30)
         @temperatura.get_Random_Temperatura
@@ -41,6 +59,8 @@ class Client
       }
     end
   end
+  
+  
   
   def establish_connection
     puts "Enter the station name:"
@@ -51,8 +71,9 @@ class Client
     @nome = msg.to_s
     msg = @server.gets.chomp
     puts "#{msg}"
-    listen
-    send
+    listenRuido
+    listenTemp
+    listenClient
   end
 
   def random_Location
