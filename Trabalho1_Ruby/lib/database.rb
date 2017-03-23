@@ -85,7 +85,6 @@ class Database
     else
       sth = @dbh.execute("SELECT  distinct Noise.Value, Noise.Date FROM Noise join client on Noise.client_id=?",client_name)
     end
-    puts "TESTE"
     while row = sth.fetch do
      puts "Value: #{row[0]}, Date: #{row[1]}"
     end
