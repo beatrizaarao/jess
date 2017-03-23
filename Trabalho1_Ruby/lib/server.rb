@@ -84,13 +84,14 @@ class Server
     @response = Thread.new do
     loop {  
         message = client.gets.chomp.to_s
-         if message.eql?("terminar")
+        coisinha= message.split(" ")
+         if coisinha[0].eql?("terminar")
            nome = @database.getNome(client)
            @database.update_Client(nome, 0, client)
            client.close
-           puts "O cliente #{nome} fechou a conexão"
+           
+           puts "O cliente #{nome} fechou a conexão e fez #{coisinha[1]} leituras"
          else
-           #puts "#{message}"
           #Separa as mensagens por parametros
             parametros = message.split(",") 
             n = parametros[0]

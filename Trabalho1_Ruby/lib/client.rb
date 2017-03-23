@@ -12,6 +12,8 @@ class Client
     @nome = nil
     @ruido = Ruido.new
     @temperatura = Temperatura.new
+    @countTemp=0
+    @countRuido=0
     @localizacao = nil
     @threadRuido = nil
     @threadTemp = nil
@@ -28,6 +30,7 @@ class Client
         @ruido.get_Random_Ruido
         time_ruido = @ruido.get_data
         @server.puts "Name: #{@nome}, Sensor: Noise, Value: #{@ruido.get_Ruido}, Location: #{@localizacao}, Time: #{time_ruido}"
+        @countRuido+=1
         sleep(1)
       }
     end
@@ -38,7 +41,8 @@ class Client
       loop {
         mensagem = $stdin.gets.chomp.to_s
         if mensagem.eql?("terminar")
-          @server.puts "#{mensagem}"
+          countTotal=@countRuido+@countTemp
+          @server.puts "#{mensagem + " " + countTotal.to_s}"
           @server.close
           @threadTemp.terminate
           @threadRuido.terminate
@@ -56,6 +60,7 @@ class Client
         @temperatura.get_Random_Temperatura
         time_temperatura = @temperatura.get_data
         @server.puts "Name: #{@nome}, Sensor: Temperature, Value: #{@temperatura.get_Temperatura}, Location: #{@localizacao}, Time: #{time_temperatura}" 
+        @countTemp+=1
       }
     end
   end
