@@ -30,7 +30,7 @@ CREATE TABLE `Temperature` (
   PRIMARY KEY (`idTemperature`),
   KEY `Client_name_idx` (`Client_name`),
   CONSTRAINT `Client_name` FOREIGN KEY (`Client_name`) REFERENCES `client` (`Name`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-10 23:18:57
+-- Dump completed on 2017-03-23 13:52:51

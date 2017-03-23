@@ -26,6 +26,7 @@ CREATE TABLE `client` (
   `Name` varchar(45) NOT NULL,
   `Location` varchar(100) NOT NULL,
   `Connected` int(11) NOT NULL,
+  `Connection` varchar(80) NOT NULL,
   PRIMARY KEY (`Name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -48,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-10 23:18:57
+-- Dump completed on 2017-03-23 13:52:51
